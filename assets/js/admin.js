@@ -1,0 +1,6 @@
+var Admin = {
+
+    initView: function(){
+    }
+
+};

@@ -2,10 +2,14 @@
 
 class Login extends CI_Controller {
 
+    protected $key;
+
     public function __construct()
     {
         parent::__construct();
         $this->load->model('Admin_model');
+
+        $this->key = $this->config->item('encryption_key');
     }
 
     public function index()
@@ -14,6 +18,11 @@ class Login extends CI_Controller {
         $dataOptions['footer'] = $this->load->view('public/footer', TRUE);
 
         $this->load->view('admin/login', $dataOptions);
+    }
+
+    public function verify()
+    {
+
     }
 }
 
