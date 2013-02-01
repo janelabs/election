@@ -17,9 +17,11 @@ class Super_model extends CI_Model {
      * Data: All or specific (based on given select and where options)
      * Single Table
      *
-     * @return $query
+     * @param array $selectOptions
+     * @param string $where
+     * @return null|object $query
      */
-    public function fetchData($selectOptions = '', $where = '')
+    public function fetchData($selectOptions = null, $where = null)
     {
         if ($selectOptions) {
             $this->db->select($selectOptions);
