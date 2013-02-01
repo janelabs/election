@@ -15,6 +15,7 @@ class Super_model extends CI_Model {
     /**
      * Returns data from a table
      * Data: All or specific (based on given select and where options)
+     * Single Table
      *
      * @return $query
      */
