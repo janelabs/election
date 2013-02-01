@@ -13,13 +13,22 @@ class Super_model extends CI_Model {
     }
 
     /**
-     * Returns all data from a table
+     * Returns data from a table
+     * Data: All or specific (based on given select and where options)
      *
      * @return $query
      */
-    public function fetchAllData()
+    public function fetchData($selectOptions = '', $where = '')
     {
-        if( ! $query = $this->db->get($this->table)->result()) $query = NULL;
+        if ($selectOptions) {
+            $this->db->select($selectOptions);
+        }
+
+        if ($where) {
+            $this->db->where($where);
+        }
+
+        if( ! $query = $this->db->get($this->table)->result()) $query = null;
         return $query;
     }
 

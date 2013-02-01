@@ -13,7 +13,7 @@ class Login extends CI_Controller {
         $dataOptions['header'] = $this->load->view('public/header', TRUE);
         $dataOptions['footer'] = $this->load->view('public/footer', TRUE);
 
-        $dataOptions['data'] = $this->Admin_model->fetchAllData();
+        $dataOptions['data'] = $this->Admin_model->fetchData();
 
         $this->load->view('admin/login', $dataOptions);
     }
