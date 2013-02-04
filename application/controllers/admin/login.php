@@ -17,9 +17,13 @@ class Login extends CI_Controller {
 
     public function index()
     {
+        if ($this->session->userdata('auid')) {
+            redirect('admin/home');
+        }
+
         $title['title'] = 'Login';
-        $dataOptions['header'] = $this->load->view('admin/header', $title, TRUE);
-        $dataOptions['footer'] = $this->load->view('admin/footer', NULL, TRUE);
+        $dataOptions['header'] = $this->load->view('admin/header', $title, true);
+        $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
         $this->load->view('admin/login', $dataOptions);
     }
 
@@ -29,8 +33,8 @@ class Login extends CI_Controller {
      */
     public function verify()
     {
-        $email = $this->input->post('email', TRUE);
-        $password = $this->input->post('password', TRUE);
+        $email = $this->input->post('email', true);
+        $password = $this->input->post('password', true);
 
         if (!empty($email) && !empty($password)) {
             //check email
@@ -48,6 +52,7 @@ class Login extends CI_Controller {
                         redirect('admin/login');
                     }
                     else {
+                        $this->_setLoggedAccount($upass->member_id);
                         redirect('admin/home');
                     }
                 endif;
@@ -73,11 +78,25 @@ class Login extends CI_Controller {
     private function _getData($col, $val, $model)
     {
         $where = array($col => $val);
-        $var = $this->$model->fetchSingleData(NULL, $where);
+        $var = $this->$model->fetchSingleData(null, $where);
         if(! $var) {
-            return FALSE;
+            return false;
         }
         return $var;
+    }
+
+    /**
+     * set admin session
+     *
+     * @param $uid
+     */
+    private function _setLoggedAccount($uid)
+    {
+        $logged_account = array(
+            'auid' => md5($uid . $this->key),
+            'logged' => true
+        );
+        $this->session->set_userdata($logged_account);
     }
 }
 
