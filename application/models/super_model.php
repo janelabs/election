@@ -2,8 +2,8 @@
 
 class Super_model extends CI_Model {
 
-    public $table;
-    public $tableAlias;
+    protected $table;
+    protected $tableAlias;
 
     public function __construct($tbl = '', $alias = '')
     {
@@ -35,6 +35,28 @@ class Super_model extends CI_Model {
         return $query;
     }
 
+    /**
+     * Returns data from a table
+     * Data: All or specific (based on given select and where options)
+     * Single Table
+     *
+     * @param array $selectOptions
+     * @param string $where
+     * @return null|object $query
+     */
+    public function fetchSingleData($selectOptions = null, $where = null)
+    {
+        if ($selectOptions) {
+            $this->db->select($selectOptions);
+        }
+
+        if ($where) {
+            $this->db->where($where);
+        }
+
+        if( ! $query = $this->db->get($this->table)->row()) $query = null;
+        return $query;
+    }
 }
 
 /* End of file super_model.php */
