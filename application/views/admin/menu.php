@@ -1,6 +1,6 @@
 <div class="span12">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Home</a></li>
+        <li><a href="<?php echo site_url('admin/home'); ?>">Home</a></li>
 
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -8,7 +8,8 @@
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="#">Register Member</a></li>
+                <li><a href="<?php echo site_url('admin/member/register'); ?>">Register Member</a></li>
+                <li><a href="<?php echo site_url('admin/member'); ?>">List of Member(s)</a></li>
             </ul>
         </li>
 

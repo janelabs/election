@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Member extends CI_Controller {
 
     public function __construct()
     {
@@ -15,19 +15,18 @@ class Home extends CI_Controller {
 
     public function index()
     {
-        if (!$this->session->userdata('uid')) {
-            redirect('admin/login');
-        }
-
-        $header['title'] = 'Home';
+        $header['title'] = 'Member';
         $header['menu'] = $this->load->view('admin/menu', null, true);
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
         $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
 
-        $this->load->view('admin/home', $dataOptions);
+        $dataOptions['members'] = $mem = $this->Member_model->fetchData();
+        $dataOptions['memcount'] = count($mem);
+
+        $this->load->view('admin/member', $dataOptions);
     }
 
 }
 
-/* End of file home.php */
-/* Location: ./application/controllers/admin/home.php */
+/* End of file member.php */
+/* Location: ./application/controllers/admin/member.php */
