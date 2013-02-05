@@ -7,6 +7,7 @@ class Member extends MY_Controller {
         parent::__construct();
         $this->load->model('Admin_model');
         $this->load->library('form_validation');
+        $this->load->helper('string');
 
         $menuActive = array('mActive' => 'membernav');
         $this->session->set_userdata($menuActive);
@@ -107,7 +108,49 @@ class Member extends MY_Controller {
             //error msg
             $this->session->set_flashdata('reg_error', validation_errors());
             redirect('admin/member/register');
+        } else {
+            //key checker
+            $key = $this->generateKey();
+            while ($this->getData('key', $key, 'Member_model')) {
+                $key = $this->generateKey();
+            }
+
+            //data to be saved
+            $data = array(
+                'last_name' => $lname,
+                'first_name' => $fname,
+                'middle_name' => $mname,
+                'address' => $address,
+                'mobile_no' => $mobile_no,
+                'email_address' => $eadd,
+                'key' => $key,
+                'vote_status' => "Pending"
+            );
+
+            if ($this->Member_model->insertData($data)) {
+                redirect('admin/member');
+            } else {
+                //prev fields value
+                $this->session->set_flashdata($val);
+                //error msg
+                $this->session->set_flashdata('reg_error', "Something went wrong while adding this member, please try again.");
+                redirect('admin/member/register');
+            }
         }
+    }
+
+    /**
+     * Generate member key, for voting purposes
+     *
+     * @return string
+     */
+    private function generateKey()
+    {
+        $first_4 = random_string('alpha', 4);
+        $second_4 = random_string('alnum', 4);
+        $third_4 = random_string('numeric', 4);
+
+        return strtoupper($first_4.'-'.$second_4.'-'.$third_4);
     }
 
 }

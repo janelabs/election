@@ -27,7 +27,7 @@
                             <td><?php echo strtoupper($m->last_name).', '.$m->first_name.' '.$m->middle_name; ?></td>
                             <td><?php echo $m->address; ?></td>
                             <td><?php echo $m->mobile_no; ?></td>
-                            <td><?php echo "Ongoing"; ?></td>
+                            <td><?php echo "Pending"; ?></td>
                             <td class="center-align">
                                 <div class="btn-group">
                                     <a href="#" class="btn"><i class="icon-search"></i> View</a>

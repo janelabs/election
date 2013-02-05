@@ -57,6 +57,20 @@ class Super_model extends CI_Model {
         if( ! $query = $this->db->get($this->table)->row()) $query = null;
         return $query;
     }
+
+    /**
+     * Insert data in table
+     *
+     * @param $data
+     */
+    public function insertData($data)
+    {
+        $query = false;
+        if ($data) {
+            $query = $this->db->insert($this->table, $data);
+        }
+        return $query;
+    }
 }
 
 /* End of file super_model.php */
