@@ -66,7 +66,7 @@
                     </span>
                 </div><br><br>
 
-<!-- email address -->
+<!-- buttons -->
                 <div class="controls-row">
                     <span class="span7">
                         <input type="reset" value="RESET FORM" class="btn btn-large btn-info padding-btn" />
