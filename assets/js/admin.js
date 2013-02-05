@@ -31,3 +31,30 @@ var Admin = {
         });
     }
 };
+
+var AdminMember = {
+    initView: function(){
+        //validate login form
+        AdminMember.validateRegister();
+    },
+
+    validateRegister: function () {
+        $('#registerFrm').validate({
+            rules: {
+                lname: "required",
+                fname: "required",
+                mname: "required",
+                address: "required",
+                mobile_no: {
+                    digits: true,
+                    minlength: 11
+                },
+                eadd: {
+                    required: true,
+                    email: true
+                }
+            },
+            errorClass: "reg_error"
+        });
+    }
+};

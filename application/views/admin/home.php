@@ -7,8 +7,6 @@
 </div>
 
 <script type="text/javascript">
-    $(function(){
-        Admin.initView();
-    });
+
 </script>
 <?php echo $footer; ?>

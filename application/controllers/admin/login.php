@@ -1,18 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Login extends CI_Controller {
-
-    protected $key;
+class Login extends MY_Controller {
 
     public function __construct()
     {
         parent::__construct();
         $this->load->model(array(
-            'Admin_model',
-            'Member_model'
+            'Admin_model'
         ));
 
-        $this->key = $this->config->item('encryption_key');
     }
 
     public function index()
@@ -38,11 +34,11 @@ class Login extends CI_Controller {
 
         if (!empty($email) && !empty($password)) {
             //check email
-            $var = $this->_getData('email_address', $email, 'Member_model');
+            $var = $this->getData('email_address', $email, 'Member_model');
 
             //check password
             if ($var) {
-                $upass = $this->_getData('member_id', $var->id, 'Admin_model');
+                $upass = $this->getData('member_id', $var->id, 'Admin_model');
                 if (!$upass):
                     $this->session->set_flashdata('login_error', "You are not an admin of this site.");
                     redirect('admin/login');
@@ -67,22 +63,6 @@ class Login extends CI_Controller {
             $this->session->set_flashdata('login_error', "Please enter a valid email and/or password.");
             redirect('admin/login');
         }
-    }
-
-    /**
-     * @param $col      //name of column
-     * @param $val      //value of column
-     * @param $model    //model name
-     * @return bool|object
-     */
-    private function _getData($col, $val, $model)
-    {
-        $where = array($col => $val);
-        $var = $this->$model->fetchSingleData(null, $where);
-        if(! $var) {
-            return false;
-        }
-        return $var;
     }
 
     /**

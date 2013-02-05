@@ -2,6 +2,8 @@
 
 class MY_Controller extends CI_Controller {
 
+    public $key;
+
     public function __construct()
     {
         parent::__construct();
@@ -22,6 +24,22 @@ class MY_Controller extends CI_Controller {
         if (empty($uid)) {
             redirect('admin/login');
         }
+    }
+
+    /**
+     * @param $col      //name of column
+     * @param $val      //value of column
+     * @param $model    //model name
+     * @return bool|object
+     */
+    public function getData($col, $val, $model)
+    {
+        $where = array($col => $val);
+        $var = $this->$model->fetchSingleData(null, $where);
+        if(! $var) {
+            return false;
+        }
+        return $var;
     }
 
 }
