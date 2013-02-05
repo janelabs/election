@@ -12,7 +12,7 @@ class Member extends MY_Controller {
     {
         $this->checkLoggedStatus();
 
-        $header['title'] = 'Member';
+        $header['title'] = 'Member - List';
         $header['menu'] = $this->load->view('admin/menu', null, true);
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
         $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
@@ -21,6 +21,21 @@ class Member extends MY_Controller {
         $dataOptions['memcount'] = count($mem);
 
         $this->load->view('admin/member', $dataOptions);
+    }
+
+    /**
+     * view registration form
+     */
+    public function register()
+    {
+        $this->checkLoggedStatus();
+
+        $header['title'] = 'Member - Registration';
+        $header['menu'] = $this->load->view('admin/menu', null, true);
+        $dataOptions['header'] = $this->load->view('admin/header', $header, true);
+        $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
+
+        $this->load->view('admin/register', $dataOptions);
     }
 
 }

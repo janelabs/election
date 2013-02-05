@@ -7,7 +7,6 @@
     }
 </style>
 
-<div>&nbsp;</div>
 <div class="hcenter-content">
     <div class="row-fluid">
         <h3>List of Member<?php echo (!empty($memcount) && $memcount > 1) ? 's':''; ?></h3>
