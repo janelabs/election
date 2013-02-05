@@ -6,6 +6,8 @@ class Member extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('Admin_model');
+        $menuActive = array('mActive' => 'membernav');
+        $this->session->set_userdata($menuActive);
     }
 
     public function index()
@@ -13,7 +15,8 @@ class Member extends MY_Controller {
         $this->checkLoggedStatus();
 
         $header['title'] = 'Member - List';
-        $header['menu'] = $this->load->view('admin/menu', null, true);
+        $menu['active'] = $this->session->userdata('mActive');
+        $header['menu'] = $this->load->view('admin/menu', $menu, true);
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
         $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
 
@@ -31,7 +34,8 @@ class Member extends MY_Controller {
         $this->checkLoggedStatus();
 
         $header['title'] = 'Member - Registration';
-        $header['menu'] = $this->load->view('admin/menu', null, true);
+        $menu['active'] = $this->session->userdata('mActive');
+        $header['menu'] = $this->load->view('admin/menu', $menu, true);
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
         $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
 

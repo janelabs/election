@@ -11,8 +11,12 @@ class Home extends MY_Controller {
     {
         $this->checkLoggedStatus();
 
+        $menuActive = array('mActive' => 'homenav');
+        $this->session->set_userdata($menuActive);
+
         $header['title'] = 'Home';
-        $header['menu'] = $this->load->view('admin/menu', null, true);
+        $menu['active'] = $this->session->userdata('mActive');
+        $header['menu'] = $this->load->view('admin/menu', $menu, true);
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
         $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
 
