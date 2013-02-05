@@ -1,23 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Home extends MY_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array(
-            'Admin_model',
-            'Member_model'
-        ));
-
-        $this->key = $this->config->item('encryption_key');
     }
 
     public function index()
     {
-        if (!$this->session->userdata('uid')) {
-            redirect('admin/login');
-        }
+        $this->checkLoggedStatus();
 
         $header['title'] = 'Home';
         $header['menu'] = $this->load->view('admin/menu', null, true);

@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row">
             <?php
-                if ($menu) {
+                if ( !empty($menu)) {
                     ?>
                     <div class="row-fluid">
                         <?php echo $menu; ?>

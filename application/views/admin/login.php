@@ -44,7 +44,7 @@
             </div>
 
             <div class="span4 center-content pull-right">
-                <br><h1><em>Admin</em></h1>
+                <br><br><br><h1><em>Admin</em></h1>
             </div>
         </div>
 

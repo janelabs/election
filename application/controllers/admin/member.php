@@ -1,20 +1,17 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Member extends CI_Controller {
+class Member extends MY_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array(
-            'Admin_model',
-            'Member_model'
-        ));
-
-        $this->key = $this->config->item('encryption_key');
+        $this->load->model('Admin_model');
     }
 
     public function index()
     {
+        $this->checkLoggedStatus();
+
         $header['title'] = 'Member';
         $header['menu'] = $this->load->view('admin/menu', null, true);
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
