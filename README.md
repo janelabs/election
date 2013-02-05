@@ -14,15 +14,16 @@ Admin
     - Add, Edit, Delete (new) admin (not super admin)
     - Manages candidate(s) and party list(s)
     - Give the result
+
 Public:
     - Use in election proper
     - Uses generated key to vote
 
 ====================================================================================================================
 
-PHP
-JQuery
-Bootstrap
+PHP,
+JQuery,
+Bootstrap,
 Codeigniter 2.1.3
 
 ====================================================================================================================
