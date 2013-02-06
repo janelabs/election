@@ -12,6 +12,8 @@ class MY_Controller extends CI_Controller {
             'Member_model'
         ));
 
+        $this->load->library('pagination');
+
         $this->key = $this->config->item('encryption_key');
     }
 

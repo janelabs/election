@@ -21,7 +21,7 @@ class Super_model extends CI_Model {
      * @param string $where
      * @return null|object $query
      */
-    public function fetchData($selectOptions = null, $where = null)
+    public function fetchData($selectOptions = null, $where = null, $limit = null, $offset = null)
     {
         if ($selectOptions) {
             $this->db->select($selectOptions);
@@ -29,6 +29,10 @@ class Super_model extends CI_Model {
 
         if ($where) {
             $this->db->where($where);
+        }
+
+        if ($limit) {
+            $this->db->limit($limit, $offset);
         }
 
         if( ! $query = $this->db->get($this->table)->result()) $query = null;

@@ -15,6 +15,17 @@ class Member extends MY_Controller {
 
     public function index()
     {
+        redirect('admin/member/lists');
+    }
+
+
+    /**
+     * Display the list of members who can vote/be an admin
+     *
+     * @param int $page
+     */
+    public function lists($page = 0)
+    {
         $this->checkLoggedStatus();
 
         $header['title'] = 'Member - List';
@@ -23,8 +34,32 @@ class Member extends MY_Controller {
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
         $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
 
-        $dataOptions['members'] = $mem = $this->Member_model->fetchData();
-        $dataOptions['memcount'] = count($mem);
+        $dataOptions['memcount'] = $total = count($this->Member_model->fetchData());
+
+        // for pagination
+        $config['base_url'] = site_url('admin/member/lists/');
+        $config['total_rows'] = $total;
+        $config['per_page'] = 10;
+        $config['uri_segment'] = 4;
+        $config['use_page_numbers'] = true;
+        $config['full_tag_open'] = "<ul>";
+        $config['full_tag_close'] = "</ul>";
+        $config['cur_tag_open'] = "<li class='active'><a>";
+        $config['cur_tag_close'] = "</a></li>";
+        $config['num_tag_open'] = "<li>";
+        $config['num_tag_close'] = "</li>";
+        $config['next_tag_open'] = "<li>";
+        $config['next_tag_close'] = "</li>";
+        $config['prev_tag_open'] = "<li>";
+        $config['prev_tag_close'] = "</li>";
+
+        $this->pagination->initialize($config);
+
+        $offset = $page ;
+        // end pagination
+
+        $dataOptions['members'] = $this->Member_model->fetchData(null, null, $config['per_page'], $offset);
+        $dataOptions['page_link'] = $this->pagination->create_links();
 
         $this->load->view('admin/member', $dataOptions);
     }

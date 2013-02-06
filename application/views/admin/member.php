@@ -54,6 +54,15 @@
             ?>
 
         </table>
+        <?php
+            if ($members):
+                ?>
+                <div class="pagination pagination-centered">
+                    <?php echo $page_link; ?>
+                </div>
+                <?php
+            endif;
+        ?>
     </div>
 </div>
 
