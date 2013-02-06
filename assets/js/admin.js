@@ -36,6 +36,10 @@ var AdminMember = {
     initView: function(){
         //validate login form
         AdminMember.validateRegister();
+
+        $('.alink').click(function(){
+            AdminMember.view($(this).attr('id'));
+        });
     },
 
     validateRegister: function () {
@@ -55,6 +59,12 @@ var AdminMember = {
                 }
             },
             errorClass: "reg_error"
+        });
+    },
+
+    view: function (id) {
+        $.post(site_url + 'admin/member/view', { mid: id }, function(result){
+            $('#view_div').html('').html(result).modal();
         });
     }
 };

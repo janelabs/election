@@ -11,11 +11,12 @@
     <div class="row-fluid">
         <h3>List of Member<?php echo (!empty($memcount) && $memcount > 1) ? 's':''; ?></h3>
         <table class="table table-striped table-hover">
-            <tr>
+            <tr class="center-align">
                 <th>Name</th>
-                <th>Address</th>
-                <th>Mobile Number</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
                 <th>Voting Status</th>
+                <th>&nbsp;</th>
                 <th>Action</th>
             </tr>
 
@@ -25,20 +26,21 @@
                         ?>
                         <tr>
                             <td><?php echo strtoupper($m->last_name).', '.$m->first_name.' '.$m->middle_name; ?></td>
-                            <td><?php echo $m->address; ?></td>
-                            <td><?php echo $m->mobile_no; ?></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                             <td><?php echo "Pending"; ?></td>
+                            <td>&nbsp;</td>
                             <td class="center-align">
                                 <div class="btn-group">
-                                    <a href="#" class="btn"><i class="icon-search"></i> View</a>
+                                    <a id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-search"></i> View</a>
                                 </div>
 
                                 <div class="btn-group">
-                                    <a href="#" class="btn"><i class="icon-pencil"></i> Edit</a>
+                                    <a id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-pencil"></i> Edit</a>
                                 </div>
 
                                 <div class="btn-group">
-                                    <a href="#" class="btn"><i class="icon-trash"></i> Delete</a>
+                                    <a id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-trash"></i> Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -66,9 +68,12 @@
     </div>
 </div>
 
+<!--MODAL-->
+<div id="view_div" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+
 <script type="text/javascript">
     $(function(){
-        Admin.initView();
+        AdminMember.initView();
     });
 </script>
 <?php echo $footer; ?>

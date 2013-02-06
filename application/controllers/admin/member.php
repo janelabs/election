@@ -188,6 +188,15 @@ class Member extends MY_Controller {
         return strtoupper($first_4.'-'.$second_4.'-'.$third_4);
     }
 
+    public function view()
+    {
+        $mid = $this->input->post('mid', true);
+        $where = array('id' => $mid);
+        $data['member'] = $this->Member_model->fetchSingleData(null, $where);
+
+        $this->load->view('admin/view_info', $data);
+    }
+
 }
 
 /* End of file member.php */
