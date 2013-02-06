@@ -1,6 +1,9 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
-class Super_model extends CI_Model {
+class Super_model extends CI_Model
+{
 
     protected $table;
     protected $tableAlias;
@@ -35,7 +38,9 @@ class Super_model extends CI_Model {
             $this->db->limit($limit, $offset);
         }
 
-        if( ! $query = $this->db->get($this->table)->result()) $query = null;
+        if (!$query = $this->db->get($this->table)->result()) {
+            $query = null;
+        }
         return $query;
     }
 
@@ -58,7 +63,9 @@ class Super_model extends CI_Model {
             $this->db->where($where);
         }
 
-        if( ! $query = $this->db->get($this->table)->row()) $query = null;
+        if (!$query = $this->db->get($this->table)->row()) {
+            $query = null;
+        }
         return $query;
     }
 

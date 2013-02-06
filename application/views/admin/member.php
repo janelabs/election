@@ -10,7 +10,7 @@
 <div class="hcenter-content">
     <div class="row-fluid">
         <h3>List of Member<?php echo (!empty($memcount) && $memcount > 1) ? 's':''; ?></h3>
-        <table class="table table-striped">
+        <table class="table table-striped table-hover">
             <tr>
                 <th>Name</th>
                 <th>Address</th>
