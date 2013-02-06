@@ -224,6 +224,12 @@ class Member extends MY_Controller {
         }
     }
 
+
+    /**
+     * View member's data and allow admin to modify it
+     *
+     * @param int $id
+     */
     public function edit($id = 0)
     {
         $this->checkLoggedStatus();
@@ -236,7 +242,81 @@ class Member extends MY_Controller {
             $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
             $dataOptions['func'] = "Edit Information";
 
+            $where = array('id' => $id);
+            $dataOptions['member'] = $member = $this->Member_model->fetchSingleData(null, $where);
+
+            if ($member) {
+                $val = array(
+                    'lname' => $member->last_name,
+                    'fname' => $member->first_name,
+                    'mname' => $member->middle_name,
+                    'address' => $member->address,
+                    'mobile' => $member->mobile_no,
+                    'eadd' => $member->email_address
+                );
+                $this->session->set_userdata($val);
+            }
+
             $this->load->view('admin/form', $dataOptions);
+        }
+    }
+
+    /**
+     * Save member's info modification
+     */
+    public function edit_save()
+    {
+        $this->checkLoggedStatus();
+
+        $id = trim($this->input->post('hid', true));
+        $lname = trim($this->input->post('lname', true));
+        $fname = trim($this->input->post('fname', true));
+        $mname = trim($this->input->post('mname', true));
+        $address = trim($this->input->post('address', true));
+        $mobile_no = trim($this->input->post('mobile_no', true));
+        $eadd = trim($this->input->post('eadd', true));
+
+        $val = array(
+            'lname' => $lname,
+            'fname' => $fname,
+            'mname' => $mname,
+            'address' => $address,
+            'mobile' => $mobile_no,
+            'eadd' => $eadd
+        );
+        // #TODO create callback for email validation
+        $this->validateForm();
+        if ($this->form_validation->run() == false) {
+            //prev fields value
+            $this->session->set_userdata($val);
+            //error msg
+            $this->session->set_userdata('error', validation_errors());
+            redirect('admin/member/edit');
+        } else {
+            //data to be saved
+            $data = array(
+                'last_name' => $lname,
+                'first_name' => $fname,
+                'middle_name' => $mname,
+                'address' => $address,
+                'mobile_no' => $mobile_no,
+                'email_address' => $eadd,
+                'date_modified' => date('Y-m-d')
+            );
+
+            $where = array('id'=>$id);
+
+            if ($this->Member_model->updateData($data, $where)) {
+                $this->session->unset_userdata($val);
+                $this->session->unset_userdata('error');
+                redirect('admin/member');
+            } else {
+                //prev fields value
+                $this->session->set_userdata($val);
+                //error msg
+                $this->session->set_userdata('error', "Something went wrong while saving this member' data, please try again.");
+                redirect('admin/member/edit/'.$id);
+            }
         }
     }
 }

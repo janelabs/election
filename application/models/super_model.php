@@ -83,12 +83,33 @@ class Super_model extends CI_Model
         return $query;
     }
 
+    /**
+     * Delete selected data
+     *
+     * @param $where
+     * @return bool
+     */
     public function deleteData($where)
     {
         $query = false;
         if ($where) {
             $this->db->where($where);
             $query = $this->db->delete($this->table);
+        }
+        return $query;
+    }
+
+    /**
+     * Update data in table
+     *
+     * @param $data
+     */
+    public function updateData($data, $where)
+    {
+        $query = false;
+        if ($data && $where) {
+            $this->db->where($where);
+            $query = $this->db->update($this->table, $data);
         }
         return $query;
     }

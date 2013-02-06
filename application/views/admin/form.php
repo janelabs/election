@@ -47,6 +47,7 @@
         <div class="span10">
             <!-- START FORM -->
             <form class="form-horizontal modal-header" name="frm" id="frm" method="post" action="<?php echo $link; ?>">
+                <input type="hidden" id="hid" name="hid" value="<?php echo (!empty($member->id)) ? $member->id:0; ?>" />
                 <div class="controls-row">
                     <span class="span2"><h5>&nbsp;</h5></span>
                     <span class="span5">
