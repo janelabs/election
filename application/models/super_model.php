@@ -82,6 +82,16 @@ class Super_model extends CI_Model
         }
         return $query;
     }
+
+    public function deleteData($where)
+    {
+        $query = false;
+        if ($where) {
+            $this->db->where($where);
+            $query = $this->db->delete($this->table);
+        }
+        return $query;
+    }
 }
 
 /* End of file super_model.php */

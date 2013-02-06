@@ -38,7 +38,9 @@ var AdminMember = {
         AdminMember.validateRegister();
 
         $('.alink').click(function(){
-            AdminMember.view($(this).attr('id'));
+            if ($(this).attr('name') == "view") {
+                AdminMember.view($(this).attr('id'));
+            }
         });
     },
 

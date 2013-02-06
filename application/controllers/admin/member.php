@@ -188,6 +188,9 @@ class Member extends MY_Controller {
         return strtoupper($first_4.'-'.$second_4.'-'.$third_4);
     }
 
+    /**
+     * Fetch and Display member's information
+     */
     public function view()
     {
         $mid = $this->input->post('mid', true);
@@ -195,6 +198,20 @@ class Member extends MY_Controller {
         $data['member'] = $this->Member_model->fetchSingleData(null, $where);
 
         $this->load->view('admin/view_info', $data);
+    }
+
+    /**
+     * Delete data
+     */
+    public function delete()
+    {
+        $id = $this->input->post('id', true);
+        $where = array('id'=>$id);
+        if ($this->Member_model->deleteData($where)) {
+            echo "Member deleted.";
+        } else {
+            echo "Something went wrong while deleting this data. Please try again.";
+        }
     }
 
 }

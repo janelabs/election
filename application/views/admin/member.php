@@ -32,15 +32,15 @@
                             <td>&nbsp;</td>
                             <td class="center-align">
                                 <div class="btn-group">
-                                    <a id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-search"></i> View</a>
+                                    <a name="view" id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-search"></i> View</a>
                                 </div>
 
                                 <div class="btn-group">
-                                    <a id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-pencil"></i> Edit</a>
+                                    <a name="edit" id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-pencil"></i> Edit</a>
                                 </div>
 
                                 <div class="btn-group">
-                                    <a id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-trash"></i> Delete</a>
+                                    <a name="delete" id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-trash"></i> Delete</a>
                                 </div>
                             </td>
                         </tr>
