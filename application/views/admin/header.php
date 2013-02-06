@@ -18,11 +18,22 @@
     </script>
 </head>
 
+<noscript>
+    <div class="row-fluid">
+        <h3><span class="span12">Please enable your javascript.</span></h3>
+    </div>
+    <style type="text/css">
+        .container {
+            display: none !important;
+        }
+    </style>
+</noscript>
+
 <body>
     <div class="container">
         <div class="row">
             <?php
-                if ( !empty($menu)) {
+                if (!empty($menu)) {
                     ?>
                     <div class="row-fluid">
                         <?php echo $menu; ?>

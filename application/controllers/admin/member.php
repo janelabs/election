@@ -121,6 +121,8 @@ class Member extends MY_Controller {
 
     public function add()
     {
+        $this->checkLoggedStatus();
+
         $lname = trim($this->input->post('lname', true));
         $fname = trim($this->input->post('fname', true));
         $mname = trim($this->input->post('mname', true));
@@ -194,6 +196,8 @@ class Member extends MY_Controller {
      */
     public function view()
     {
+        $this->checkLoggedStatus();
+
         $mid = $this->input->post('mid', true);
         $where = array('id' => $mid);
         $data['member'] = $this->Member_model->fetchSingleData(null, $where);
@@ -206,6 +210,8 @@ class Member extends MY_Controller {
      */
     public function delete()
     {
+        $this->checkLoggedStatus();
+
         $id = $this->input->post('mid', true);
         $where = array('id'=>$id);
         if ($this->Member_model->deleteData($where)) {
