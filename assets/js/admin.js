@@ -41,6 +41,10 @@ var AdminMember = {
             if ($(this).attr('name') == "view") {
                 AdminMember.view($(this).attr('id'));
             }
+
+            if ($(this).attr('name') == "delete") {
+                AdminMember.delete($(this).attr('id'));
+            }
         });
     },
 
@@ -68,5 +72,20 @@ var AdminMember = {
         $.post(site_url + 'admin/member/view', { mid: id }, function(result){
             $('#view_div').html('').html(result).modal();
         });
+    },
+
+    delete: function (id) {
+        var ans = confirm("Are you sure you want to remove this member?");
+        if (ans) {
+            $('tr[id="' + id +'"]').remove();
+            $.post(site_url + 'admin/member/delete', { mid: id }, function(result){
+                var openDiv = '<div class="modal-header">';
+                var closeBtn = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>';
+                var hdr = '<h4 id="myModalLabel">Delete</h4>';
+                var openBody = '<div class="modal-body">';
+                var modalContent = openDiv + closeBtn + hdr + '</div>' + openBody + '<h3>' + result + '</h3></div';
+                $('#view_div').html('').html(modalContent).modal();
+            });
+        }
     }
 };

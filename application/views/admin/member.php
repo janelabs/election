@@ -24,7 +24,7 @@
                 if($members):
                     foreach($members AS $m):
                         ?>
-                        <tr>
+                        <tr id="<?php echo $m->id; ?>">
                             <td><?php echo strtoupper($m->last_name).', '.$m->first_name.' '.$m->middle_name; ?></td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
@@ -38,10 +38,15 @@
                                 <div class="btn-group">
                                     <a name="edit" id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-pencil"></i> Edit</a>
                                 </div>
-
-                                <div class="btn-group">
-                                    <a name="delete" id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-trash"></i> Delete</a>
-                                </div>
+                                <?php
+                                    if ($this->session->userdata('auid') != md5($m->id . $key)) {
+                                        ?>
+                                        <div class="btn-group">
+                                            <a name="delete" id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-trash"></i> Delete</a>
+                                        </div>
+                                        <?php
+                                    }
+                                ?>
                             </td>
                         </tr>
                         <?php

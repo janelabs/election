@@ -60,6 +60,7 @@ class Member extends MY_Controller {
 
         $dataOptions['members'] = $this->Member_model->fetchData(null, null, $config['per_page'], $offset);
         $dataOptions['page_link'] = $this->pagination->create_links();
+        $dataOptions['key'] = $this->key;
 
         $this->load->view('admin/member', $dataOptions);
     }
@@ -205,7 +206,7 @@ class Member extends MY_Controller {
      */
     public function delete()
     {
-        $id = $this->input->post('id', true);
+        $id = $this->input->post('mid', true);
         $where = array('id'=>$id);
         if ($this->Member_model->deleteData($where)) {
             echo "Member deleted.";
