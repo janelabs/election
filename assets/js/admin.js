@@ -49,7 +49,7 @@ var AdminMember = {
     },
 
     validateRegister: function () {
-        $('#registerFrm').validate({
+        $('#frm').validate({
             rules: {
                 lname: "required",
                 fname: "required",

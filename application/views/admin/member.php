@@ -36,7 +36,7 @@
                                 </div>
 
                                 <div class="btn-group">
-                                    <a name="edit" id="<?php echo $m->id; ?>" href="javascript:void(0);" class="btn alink"><i class="icon-pencil"></i> Edit</a>
+                                    <a name="edit" href="<?php echo site_url('admin/member/edit/'.$m->id); ?>" class="btn alink"><i class="icon-pencil"></i> Edit</a>
                                 </div>
                                 <?php
                                     if ($this->session->userdata('auid') != md5($m->id . $key)) {

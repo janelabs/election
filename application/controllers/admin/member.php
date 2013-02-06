@@ -77,8 +77,9 @@ class Member extends MY_Controller {
         $header['menu'] = $this->load->view('admin/menu', $menu, true);
         $dataOptions['header'] = $this->load->view('admin/header', $header, true);
         $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
+        $dataOptions['func'] = "Registration";
 
-        $this->load->view('admin/register', $dataOptions);
+        $this->load->view('admin/form', $dataOptions);
     }
 
     private function validateForm()
@@ -142,9 +143,9 @@ class Member extends MY_Controller {
         $this->validateForm();
         if ($this->form_validation->run() == false) {
             //prev fields value
-            $this->session->set_flashdata($val);
+            $this->session->set_userdata($val);
             //error msg
-            $this->session->set_flashdata('reg_error', validation_errors());
+            $this->session->set_userdata('error', validation_errors());
             redirect('admin/member/register');
         } else {
             //key checker
@@ -166,12 +167,14 @@ class Member extends MY_Controller {
             );
 
             if ($this->Member_model->insertData($data)) {
+                $this->session->unset_userdata($val);
+                $this->session->unset_userdata('error');
                 redirect('admin/member');
             } else {
                 //prev fields value
-                $this->session->set_flashdata($val);
+                $this->session->set_userdata($val);
                 //error msg
-                $this->session->set_flashdata('reg_error', "Something went wrong while adding this member, please try again.");
+                $this->session->set_userdata('error', "Something went wrong while adding this member, please try again.");
                 redirect('admin/member/register');
             }
         }
@@ -221,6 +224,21 @@ class Member extends MY_Controller {
         }
     }
 
+    public function edit($id = 0)
+    {
+        $this->checkLoggedStatus();
+
+        if ($id > 0) {
+            $header['title'] = 'Member - Edit Information';
+            $menu['active'] = $this->session->userdata('mActive');
+            $header['menu'] = $this->load->view('admin/menu', $menu, true);
+            $dataOptions['header'] = $this->load->view('admin/header', $header, true);
+            $dataOptions['footer'] = $this->load->view('admin/footer', null, true);
+            $dataOptions['func'] = "Edit Information";
+
+            $this->load->view('admin/form', $dataOptions);
+        }
+    }
 }
 
 /* End of file member.php */
