@@ -82,6 +82,9 @@ class Member extends MY_Controller {
         $this->load->view('admin/form', $dataOptions);
     }
 
+    /**
+     * Validates the form
+     */
     private function validateForm()
     {
         $config = array(
@@ -113,13 +116,38 @@ class Member extends MY_Controller {
             array(
                 'field'   => 'eadd',
                 'label'   => 'Email Address',
-                'rules'   => 'required|valid_email|is_unique[member.email_address]'
+                'rules'   => 'required|valid_email|callback_check_email'
             )
         );
 
         $this->form_validation->set_rules($config);
     }
 
+    public function check_email($email)
+    {
+        $action = ($this->session->userdata('action')) ? $this->session->userdata('action'):'';
+        $where = array('email_address' => $email);
+        $member = $this->Member_model->fetchSingleData(null, $where);
+
+        if ($action == 'add') {
+            if ($member) {
+                $this->form_validation->set_message('check_email', 'Email Address should be unique');
+                return false;
+            }
+        }
+
+        if ($action == 'edit') {
+            if ($member && $member->id != $this->session->userdata('memId')) {
+                $this->form_validation->set_message('check_email', 'Email Address should be unique');
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Add new member
+     */
     public function add()
     {
         $this->checkLoggedStatus();
@@ -140,6 +168,9 @@ class Member extends MY_Controller {
             'eadd' => $eadd
         );
 
+        $this->session->unset_userdata('action');
+        $this->session->set_userdata('action', 'add');
+
         $this->validateForm();
         if ($this->form_validation->run() == false) {
             //prev fields value
@@ -148,6 +179,7 @@ class Member extends MY_Controller {
             $this->session->set_userdata('error', validation_errors());
             redirect('admin/member/register');
         } else {
+            $this->session->unset_userdata('action');
             //key checker
             $key = $this->generateKey();
             while ($this->getData('key', $key, 'Member_model')) {
@@ -230,7 +262,7 @@ class Member extends MY_Controller {
      *
      * @param int $id
      */
-    public function edit($id = 0)
+    public function edit($id = 0, $fieldVal = null)
     {
         $this->checkLoggedStatus();
 
@@ -254,7 +286,9 @@ class Member extends MY_Controller {
                     'mobile' => $member->mobile_no,
                     'eadd' => $member->email_address
                 );
-                $this->session->set_userdata($val);
+                if (!$fieldVal) {
+                    $this->session->set_userdata($val);
+                }
             }
 
             $this->load->view('admin/form', $dataOptions);
@@ -284,15 +318,25 @@ class Member extends MY_Controller {
             'mobile' => $mobile_no,
             'eadd' => $eadd
         );
-        // #TODO create callback for email validation
+
+        $this->session->unset_userdata('action');
+        $this->session->unset_userdata('memId');
+
+        $this->session->set_userdata(array(
+            'action' => 'edit',
+            'memId' => $id
+        ));
+
         $this->validateForm();
         if ($this->form_validation->run() == false) {
             //prev fields value
             $this->session->set_userdata($val);
             //error msg
             $this->session->set_userdata('error', validation_errors());
-            redirect('admin/member/edit');
+            redirect('admin/member/edit/'.$id.'/'.$val);
         } else {
+            $this->session->unset_userdata('action');
+            $this->session->unset_userdata('memId');
             //data to be saved
             $data = array(
                 'last_name' => $lname,
