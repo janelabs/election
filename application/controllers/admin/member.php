@@ -38,7 +38,26 @@ class Member extends MY_Controller {
 
         $dataOptions['memcount'] = $total = count($this->Member_model->fetchData());
 
+        $pageConf = $this->pagination_config($total);
         // for pagination
+        $this->pagination->initialize($pageConf);
+        $offset = $page ;
+        // end pagination
+
+        $dataOptions['members'] = $this->Member_model->fetchData(null, null, $pageConf['per_page'], $offset);
+        $dataOptions['page_link'] = $this->pagination->create_links();
+        $dataOptions['key'] = $this->key;
+
+        $this->load->view('admin/member', $dataOptions);
+    }
+
+    /**
+     * Pagination config
+     *
+     * @return mixed
+     */
+    private function pagination_config($total = 0)
+    {
         $config['base_url'] = site_url('admin/member/lists/');
         $config['total_rows'] = $total;
         $config['per_page'] = 10;
@@ -55,16 +74,7 @@ class Member extends MY_Controller {
         $config['prev_tag_open'] = "<li>";
         $config['prev_tag_close'] = "</li>";
 
-        $this->pagination->initialize($config);
-
-        $offset = $page ;
-        // end pagination
-
-        $dataOptions['members'] = $this->Member_model->fetchData(null, null, $config['per_page'], $offset);
-        $dataOptions['page_link'] = $this->pagination->create_links();
-        $dataOptions['key'] = $this->key;
-
-        $this->load->view('admin/member', $dataOptions);
+        return $config;
     }
 
     /**
@@ -393,6 +403,33 @@ class Member extends MY_Controller {
                 redirect('admin/member/edit/'.$id);
             }
         }
+    }
+
+    /**
+     * Filter member list
+     */
+    public function search()
+    {
+        $where = "id > 0";
+
+        $name = trim($this->input->post('mName', TRUE));
+        $voteStat = trim($this->input->post('mVoteStat', TRUE));
+
+        if ($name) {
+            $where .= " AND (first_name LIKE '%$name%' OR last_name LIKE '%$name%' OR middle_name LIKE '%$name%')";
+        }
+
+        if ($voteStat) {
+            $where .= " AND vote_status='$voteStat'";
+        }
+
+        $dataOptions['memcount'] = count($this->Member_model->fetchData());
+
+        $dataOptions['members'] = $this->Member_model->fetchData(null, $where);
+        $dataOptions['page_link'] = $this->pagination->create_links();
+        $dataOptions['key'] = $this->key;
+
+        $this->load->view('admin/search_disp', $dataOptions);
     }
 }
 

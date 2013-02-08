@@ -36,6 +36,7 @@ var AdminMember = {
     initView: function(){
         //validate login form
         AdminMember.validateRegister();
+        AdminMember.search();
 
         $('.alink').click(function(){
             if ($(this).attr('name') == "view") {
@@ -87,5 +88,35 @@ var AdminMember = {
                 $('#view_div').html('').html(modalContent).modal();
             });
         }
+    },
+
+    search: function () {
+        $('#frmSearch').submit(function(e){
+            e.preventDefault();
+        });
+
+        $('#searchBtn').click(function(e){
+            var name = $('#memName').val();
+            var voteStat = $('#vote_stat').val();
+
+            $.post(site_url + 'admin/member/search', {
+                mName: name,
+                mVoteStat: voteStat
+            }, function(res) {
+                $('#memList').html('').html(res);
+            });
+            e.preventDefault();
+        });
+
+        $('#resetFrm').click(function(e){
+            $('#memName').val('');
+            $('#vote_stat').val('');
+
+            $.post(site_url + 'admin/member/search', function(res) {
+                $('#memList').html('').html(res);
+            });
+
+            e.preventDefault();
+        });
     }
 };

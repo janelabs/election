@@ -9,6 +9,9 @@
         padding-left: 24px;
         padding-right: 24px;
     }
+    .resDiv {
+        display: none;
+    }
 </style>
 
 <div class="hcenter-content">
@@ -17,14 +20,10 @@
         <!-- SEARCH -->
         <div class="row-fluid">
             <fieldset class="span12">
-                <legend>Search</legend>
+                <legend><h3>Search</h3></legend>
                 <form name="frmSearch" id="frmSearch" method="post" action="">
                     <div class="span3 center-align">
                         <input class="input-xlarge" type="text" id="memName" name="memName" placeholder="Member Name" />
-                    </div>
-
-                    <div class="span3 center-align">
-                        <input class="input-xlarge" type="text" id="memEmail" name="memEmail" placeholder="Member Email" />
                     </div>
 
                     <div class="span3 center-align">
@@ -39,14 +38,14 @@
                         <input type="submit" value="Search" id="searchBtn" class="btn btn-primary padding-btn" />
                     </div>
                     <div class="span1 center-align">
-                        <input type="reset" value="Reset" class="btn btn-danger padding-btn" />
+                        <input type="button" id="resetFrm" value="Reset" class="btn btn-danger padding-btn" />
                     </div>
                 </form>
             </fieldset>
         </div><hr />
         <!-- END SEARCH -->
 
-        <h3>List of Member<?php echo (!empty($memcount) && $memcount > 1) ? 's':''; ?></h3>
+        <div id="memList"><h3>List of Member<?php echo (!empty($memcount) && $memcount > 1) ? 's':''; ?></h3>
         <table class="table table-striped table-hover">
             <tr class="center-align">
                 <th>Name</th>
@@ -96,7 +95,6 @@
                     <?php
                 endif;
             ?>
-
         </table>
         <?php
             if ($members):
@@ -106,7 +104,11 @@
                 </div>
                 <?php
             endif;
-        ?>
+        ?></div>
+
+        <div id="searchRes" class="resDiv">
+            ^______________________________________^
+        </div>
     </div>
 </div>
 
