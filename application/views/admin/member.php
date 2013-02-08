@@ -105,10 +105,6 @@
                 <?php
             endif;
         ?></div>
-
-        <div id="searchRes" class="resDiv">
-            ^______________________________________^
-        </div>
     </div>
 </div>
 
