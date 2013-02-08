@@ -6,9 +6,11 @@ class Member extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('Admin_model');
-        $this->load->library('form_validation');
+        $this->load->library(array(
+            'form_validation',
+            'email'
+        ));
         $this->load->helper('string');
-
         $menuActive = array('mActive' => 'membernav');
         $this->session->set_userdata($menuActive);
     }
@@ -199,6 +201,7 @@ class Member extends MY_Controller {
             );
 
             if ($this->Member_model->insertData($data)) {
+                $this->send_key($key, $eadd, $fname);
                 $this->session->unset_userdata($val);
                 $this->session->unset_userdata('error');
                 redirect('admin/member');
@@ -210,6 +213,32 @@ class Member extends MY_Controller {
                 redirect('admin/member/register');
             }
         }
+    }
+
+    /**
+     * Send member's key to their email
+     *
+     * @param $key
+     */
+    private function send_key($key, $email, $name)
+    {
+        $config['protocol'] = 'sendmail';
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
+
+        $this->email->from('noreply@orgelection.com', 'Org Election');
+        $this->email->to($email);
+
+        $this->email->subject('Your KEY to Vote in Upcoming Org Election');
+
+        $message = 'Hi '.ucwords($name).'!<br><br>Congratulations! You are now registered to Org Election!<br><br>
+        Your key to vote is <strong>'.$key.'</strong><br><br>
+        Election date, time and place will be announced by the committee on succeeding days so we are requesting for you to stay informed.
+         In line with this, we are hoping for your honesty for the upcoming election. Thank you very much.<br><br>Best Regards!<br>Org Election';
+        $note = '<p style="font-size: 11px; color: #8b0000">If this has nothing to do with you, please ignore.</p>';
+        $this->email->message($message."<br><br>".$note);
+
+        $this->email->send();
     }
 
     /**
