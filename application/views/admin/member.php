@@ -5,10 +5,47 @@
     .center-align {
         text-align: center;
     }
+    .padding-btn {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
 </style>
 
 <div class="hcenter-content">
     <div class="row-fluid">
+
+        <!-- SEARCH -->
+        <div class="row-fluid">
+            <fieldset class="span12">
+                <legend>Search</legend>
+                <form name="frmSearch" id="frmSearch" method="post" action="">
+                    <div class="span3 center-align">
+                        <input class="input-xlarge" type="text" id="memName" name="memName" placeholder="Member Name" />
+                    </div>
+
+                    <div class="span3 center-align">
+                        <input class="input-xlarge" type="text" id="memEmail" name="memEmail" placeholder="Member Email" />
+                    </div>
+
+                    <div class="span3 center-align">
+                        <select id="vote_stat" class="input-xlarge">
+                            <option id="0" value="none">Voting Status</option>
+                            <option id="1" value="Pending">Pending</option>
+                            <option id="2" value="Done">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="span1 center-align">
+                        <input type="submit" value="Search" id="searchBtn" class="btn btn-primary padding-btn" />
+                    </div>
+                    <div class="span1 center-align">
+                        <input type="reset" value="Reset" class="btn btn-danger padding-btn" />
+                    </div>
+                </form>
+            </fieldset>
+        </div><hr />
+        <!-- END SEARCH -->
+
         <h3>List of Member<?php echo (!empty($memcount) && $memcount > 1) ? 's':''; ?></h3>
         <table class="table table-striped table-hover">
             <tr class="center-align">

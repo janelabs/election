@@ -127,6 +127,8 @@ class Member extends MY_Controller {
 
     public function check_email($email)
     {
+        $this->checkLoggedStatus();
+
         $action = ($this->session->userdata('action')) ? $this->session->userdata('action'):'';
         $where = array('email_address' => $email);
         $member = $this->Member_model->fetchSingleData(null, $where);
