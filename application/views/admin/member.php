@@ -90,7 +90,7 @@
                 else:
                     ?>
                     <tr>
-                        <td colspan="5">No record(s) found.</td>
+                        <td colspan="3">No record(s) found.</td>
                     </tr>
                     <?php
                 endif;
