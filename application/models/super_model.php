@@ -103,6 +103,8 @@ class Super_model extends CI_Model
      * Update data in table
      *
      * @param $data
+     * @param $where
+     * @return bool
      */
     public function updateData($data, $where)
     {
