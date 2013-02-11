@@ -4,7 +4,7 @@
     });
 </script>
 
-<input type="hidden" id="activeNav" value="<?php echo $active; ?>" />
+<input type="hidden" id="activeNav" value="<?php echo $active; ?>" /><br>
 <div class="span12">
     <ul class="nav nav-tabs">
         <li id="homenav"><a href="<?php echo site_url('admin/home'); ?>">Home</a></li>
@@ -38,6 +38,10 @@
             <ul class="dropdown-menu">
                 <li><a href="#">Register Party List</a></li>
             </ul>
+        </li>
+
+        <li class="pull-right">
+            <a href="<?php echo site_url('admin/login/logout')?>" class="btn-link" title="Sign Out"><i class="icon-off"></i></a>
         </li>
     </ul>
 </div>

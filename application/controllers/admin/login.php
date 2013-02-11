@@ -78,6 +78,15 @@ class Login extends MY_Controller {
         );
         $this->session->set_userdata($logged_account);
     }
+
+    /**
+     * Destroy sessions
+     */
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(site_url('admin/login'));
+    }
 }
 
 /* End of file login.php */
